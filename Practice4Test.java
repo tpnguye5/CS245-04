@@ -1,3 +1,4 @@
+import java.awt.ItemSelectable;
 
 public class Practice4Test {
 	
@@ -27,9 +28,20 @@ public class Practice4Test {
 	public boolean isPalindrome(String item) {
 		clearData();
 		for (int i = 0; i < item.length(); i++) {
+			//add if conditional to change to lower case and another for spaces and punctuation 
+			if (item.charAt(0)==item.toUpperCase().charAt(0)){	
+				item =item.toLowerCase();
+			}
+			if (item.contains(" ") || item.contains("!") || item.contains(",") || item.contains(".") || item.contains("?")){
+				item = item.replace(" ", "");
+				item = item.replace("!", "");
+				item = item.replace(",", "");
+				item = item.replace(".", "");
+				item = item.replace("?", "");
+			}
 			stack.push(item.substring(i, i+1));
 			queue.enqueue(item.substring(i, i+1));
-		}
+			}
 
 		while (! stack.empty() && ! queue.empty()) {
 			if (! stack.pop().equals(queue.dequeue())) {
@@ -84,12 +96,14 @@ public class Practice4Test {
 			}
 			boolean emptiedEarly = false;
 			for (int i = 0; i < size_of_test; i++) {
+				
 				if ( queue.empty() || stack.empty()) {
 					emptiedEarly = true;
 				}
 				queue.dequeue();
 				stack.pop();
 			}
+						
 			if (queue.empty() && stack.empty() && ! emptiedEarly) {
 				System.out.println("[+10%] Stack and Queue appear to resize correctly.");
 				grade += 10;
@@ -124,6 +138,7 @@ public class Practice4Test {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			// Do nothing
 		} finally {
 			System.out.println("====================");
